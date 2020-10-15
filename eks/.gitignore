@@ -3,4 +3,4 @@ user-data.sh
 secrets_variables.tf
 *.xxx
 *.tfstate
-*.tfstate.backup
+*.tfstate.*

@@ -1,0 +1,11 @@
+mapRoles: |
+- rolearn: ${var.nodegroup_arn}
+  username: system:node:{{EC2PrivateDNSName}}
+  groups:
+    - system:bootstrappers
+    - system:nodes
+mapUsers: |
+- rolearn: arn:aws:iam::723307513402:user/eksuser
+      username: eksuser
+      groups:
+    - system:masters

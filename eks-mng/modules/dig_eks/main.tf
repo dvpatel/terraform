@@ -58,8 +58,6 @@ module "private_eks" {
   #  let me manage IAM resources for workers
   manage_worker_iam_resources = false
 
-  write_kubeconfig = false
-
   worker_groups = [
     {
       name                      = var.node_group_name

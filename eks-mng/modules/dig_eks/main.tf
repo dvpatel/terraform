@@ -58,7 +58,7 @@ module "private_eks" {
 }
 
 resource "aws_security_group_rule" "allow_https" {
-  description = "All bastion host in public subnet to access EKS API"
+  description = "Allow bastion host in public subnet to access EKS API"
   type        = "ingress"
   from_port   = 443
   to_port     = 443

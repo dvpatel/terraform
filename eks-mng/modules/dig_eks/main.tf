@@ -39,7 +39,6 @@ module "private_eks" {
   cluster_version = "1.18"
 
   #  This should be subnet_ids
-  #  subnets = var.private_eks_subnet_ids
   subnets = data.aws_subnet_ids.private.ids
 
   #  Derive vpc_id based on name
@@ -49,9 +48,8 @@ module "private_eks" {
   #  manage_aws_auth = false
 
   #  Let me manage IAM role for cluster
-  manage_cluster_iam_resources = false
-  cluster_iam_role_name        = var.cluster_iam_role_name
-
+  manage_cluster_iam_resources    = false
+  cluster_iam_role_name           = var.cluster_iam_role_name
   cluster_endpoint_private_access = true
   cluster_endpoint_public_access  = false
 
@@ -82,13 +80,11 @@ module "private_eks" {
 }
 
 resource "aws_security_group_rule" "allow_https" {
-  description = "Allow bastion host in public subnet to access EKS API"
-  type        = "ingress"
-  from_port   = 443
-  to_port     = 443
-  protocol    = "tcp"
-  #  cidr_blocks = var.vpc_cidr
-  cidr_blocks = data.aws_vpc.selected.*.cidr_block
-
+  description       = "Allow bastion host in public subnet to access EKS API"
+  type              = "ingress"
+  from_port         = 443
+  to_port           = 443
+  protocol          = "tcp"
+  cidr_blocks       = data.aws_vpc.selected.*.cidr_block
   security_group_id = module.private_eks.cluster_security_group_id
 }

@@ -9,15 +9,41 @@ data "aws_eks_cluster_auth" "cluster" {
 data "aws_availability_zones" "available" {
 }
 
+data "aws_vpcs" "eks" {
+  tags = {
+    Name = var.vpc_name
+  }
+}
+
+data "aws_vpc" "eks" {
+  count = length(data.aws_vpcs.eks.ids)
+  id    = tolist(data.aws_vpcs.eks.ids)[count.index]
+}
+
+data "aws_vpc" "selected" {
+  count = length(data.aws_vpcs.eks.ids)
+  id = data.aws_vpc.eks[count.index].id
+}
+
+data "aws_subnet_ids" "private" {
+  vpc_id = data.aws_vpc.selected[0].id
+
+  tags = {
+    tier = "private"
+  }
+}
+
 module "private_eks" {
   source = "terraform-aws-modules/eks/aws"
   cluster_name    = var.cluster_name
   cluster_version = "1.18"
 
   #  This should be subnet_ids
-  subnets = var.private_eks_subnet_ids
+  #  subnets = var.private_eks_subnet_ids
+  subnets = data.aws_subnet_ids.private.ids
 
-  vpc_id = var.eks_vpc_id
+  #  Derive vpc_id based on name
+  vpc_id = data.aws_vpc.selected[0].id
 
   #  do not apply aws-auth configmap file, default true
   #  manage_aws_auth = false
@@ -63,7 +89,8 @@ resource "aws_security_group_rule" "allow_https" {
   from_port   = 443
   to_port     = 443
   protocol    = "tcp"
-  cidr_blocks = var.vpc_cidr
+  #  cidr_blocks = var.vpc_cidr
+  cidr_blocks  = data.aws_vpc.selected.*.cidr_block
 
   security_group_id = module.private_eks.cluster_security_group_id
 }

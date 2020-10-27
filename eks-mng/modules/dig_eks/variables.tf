@@ -4,6 +4,11 @@ variable "region" {
   default     = "us-east-1"
 }
 
+variable "vpc_name" {
+  description = "VPC name"
+  type        = string
+}
+
 variable "cluster_name" {
   description = "EKS cluster name"
   type        = string
@@ -19,21 +24,6 @@ variable "nodegroup_role_name" {
   description = "EKS NodeGroup Role Name"
   type        = string
   default     = "devNodeInstanceRole"
-}
-
-variable "private_eks_subnet_ids" {
-  description = "EKS Private Subnet Ids"
-  type        = list(string)
-}
-
-variable "vpc_cidr" {
-  description = "For SG rule to allow EKS/K8s API access from public subnet"
-  type        = list(string)
-}
-
-variable "eks_vpc_id" {
-  description = "EKS VPC ID"
-  type        = string
 }
 
 variable "node_group_name" {

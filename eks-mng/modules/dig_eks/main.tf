@@ -22,7 +22,7 @@ data "aws_vpc" "eks" {
 
 data "aws_vpc" "selected" {
   count = length(data.aws_vpcs.eks.ids)
-  id = data.aws_vpc.eks[count.index].id
+  id    = data.aws_vpc.eks[count.index].id
 }
 
 data "aws_subnet_ids" "private" {
@@ -34,7 +34,7 @@ data "aws_subnet_ids" "private" {
 }
 
 module "private_eks" {
-  source = "terraform-aws-modules/eks/aws"
+  source          = "terraform-aws-modules/eks/aws"
   cluster_name    = var.cluster_name
   cluster_version = "1.18"
 
@@ -90,7 +90,7 @@ resource "aws_security_group_rule" "allow_https" {
   to_port     = 443
   protocol    = "tcp"
   #  cidr_blocks = var.vpc_cidr
-  cidr_blocks  = data.aws_vpc.selected.*.cidr_block
+  cidr_blocks = data.aws_vpc.selected.*.cidr_block
 
   security_group_id = module.private_eks.cluster_security_group_id
 }

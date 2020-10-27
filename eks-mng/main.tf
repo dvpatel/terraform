@@ -21,7 +21,7 @@ provider "template" {
 }
 
 module "app_eks" {
-  source = "./modules/dig_eks"
-  vpc_name = var.vpc_name
-  cluster_name           = var.cluster_name
+  source       = "./modules/dig_eks"
+  vpc_name     = var.vpc_name
+  cluster_name = var.cluster_name
 }

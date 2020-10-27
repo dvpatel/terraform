@@ -1,11 +1,3 @@
-data "aws_eks_cluster" "cluster" {
-  name = module.private_eks.cluster_id
-}
-
-data "aws_eks_cluster_auth" "cluster" {
-  name = module.private_eks.cluster_id
-}
-
 data "aws_availability_zones" "available" {
 }
 

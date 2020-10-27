@@ -1,6 +1,7 @@
 # terraform
 Terraform Examples
 
+NOTE:  eks-base, eks-mng projects are built using terraform modules;
 
 eks-base:
 	- VPC with public and private subnets

@@ -30,17 +30,11 @@ module "private_eks" {
   cluster_name    = var.cluster_name
   cluster_version = "1.18"
 
-  #  Turn on oidc for alb integration
-  enable_irsa = true
-
   #  This should be subnet_ids
   subnets = data.aws_subnet_ids.private.ids
 
   #  Derive vpc_id based on name
   vpc_id = data.aws_vpc.selected[0].id
-
-  #  do not apply aws-auth configmap file, default true
-  #  manage_aws_auth = false
 
   #  Let me manage IAM role for cluster
   manage_cluster_iam_resources    = false
@@ -78,19 +72,19 @@ module "private_eks" {
   ]
 }
 
-module "alb_ingress_controller" {
-  source  = "iplabs/alb-ingress-controller/kubernetes"
-  aws_alb_ingress_controller_version = "2.0.0"
-
-  k8s_cluster_type = "eks"
-  k8s_namespace    = "default"
-
-  aws_region_name  = var.region
-  aws_vpc_id = data.aws_vpc.selected[0].id
-  k8s_cluster_name = var.cluster_name
-
-  depends_on = [module.private_eks]
-}
+# module "alb_ingress_controller" {
+#   source  = "iplabs/alb-ingress-controller/kubernetes"
+#   aws_alb_ingress_controller_version = "2.0.0"
+# 
+#   k8s_cluster_type = "eks"
+#   k8s_namespace    = "default"
+# 
+#   aws_region_name  = var.region
+#   aws_vpc_id = data.aws_vpc.selected[0].id
+#   k8s_cluster_name = var.cluster_name
+# 
+#   depends_on = [module.private_eks]
+# }
 
 resource "aws_security_group_rule" "allow_https" {
   description       = "Allow bastion host in public subnet to access EKS API"

@@ -35,10 +35,9 @@ kubectl -n kube-system set image deployment.apps/cluster-autoscaler cluster-auto
 
 
 #  Sample app
-kubectl create namespace dev
+#  https://www.eksworkshop.com/beginner/080_scaling/test_ca/
 kubectl apply -f web-app.yaml
-kubectl get -n dev deployment/web-stateless
-kubectl get -n dev deployment/web-stateful
+kubectl get deployment/nginx-to-scaleout
 
-kubectl scale -n dev --replicas=5 deployment/web-stateless
-kubectl get -n dev pods
+#  kubectl scale --replicas=10 deployment/nginx-to-scaleout
+#  kubectl get pods

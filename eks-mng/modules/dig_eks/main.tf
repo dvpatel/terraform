@@ -50,6 +50,13 @@ module "private_eks" {
 
   worker_groups = [
     {
+      name                      = var.mng_node_group_name
+      instance_type             = var.mng_node_instance_types
+      iam_instance_profile_name = var.nodegroup_role_name
+      asg_max_size              = 1
+      kubelet_extra_args        = "--node-labels=lifecycle=OnDemand,aws.amazon.com/spot=false"
+    },
+    {
       name                                     = var.spot_node_group_name
       override_instance_types                  = var.spot_node_instance_types
       iam_instance_profile_name                = var.nodegroup_role_name
@@ -59,14 +66,8 @@ module "private_eks" {
       on_demand_percentage_above_base_capacity = 0
       spot_allocation_strategy                 = "capacity-optimized"
       spot_max_price                           = 0.017
-      kubelet_extra_args                       = "--node-labels=lifecycle=Ec2Spot"
-    },
-    {
-      name                      = var.mng_node_group_name
-      instance_type             = var.mng_node_instance_types
-      iam_instance_profile_name = var.nodegroup_role_name
-      asg_max_size              = 5
-      kubelet_extra_args        = "--node-labels=lifecycle=OnDemand"
+      kubelet_extra_args                       = "--node-labels=lifecycle=Ec2Spot,intent=apps,aws.amazon.com/spot=true --register-with-taints=spotInstance=true:PreferNoSchedule"
+      tags = ["k8s.io/cluster-autoscaler/node-template/label/lifecycle=Ec2Spot", "k8s.io/cluster-autoscaler/node-template/label/intent=apps","k8s.io/cluster-autoscaler/node-template/label/aws.amazon.com/spot=true","k8s.io/cluster-autoscaler/node-template/taint/spotInstance=true:PreferNoSchedule"]
     }
   ]
 }

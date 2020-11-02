@@ -88,6 +88,7 @@ module "private_eks" {
 
 module "alb_ingress_controller" {
   source  = "iplabs/alb-ingress-controller/kubernetes"
+  aws_alb_ingress_controller_version = 2.0.0
 
   k8s_cluster_type = "eks"
   k8s_namespace    = "kube-system"

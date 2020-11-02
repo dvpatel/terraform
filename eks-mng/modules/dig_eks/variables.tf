@@ -26,17 +26,31 @@ variable "nodegroup_role_name" {
   default     = "devNodeInstanceRole"
 }
 
-variable "node_group_name" {
-  description = "EKS NodeGroup Name"
+variable "spot_node_group_name" {
+  description = "EKS Spot NodeGroup Name"
   type        = string
-  default     = "ng"
+  default     = "spot-ng"
 }
 
-variable "node_instance_type" {
-  description = "EKS Node Instance Type"
-  type        = string
-  default     = "t2.small"
+variable "spot_node_instance_types" {
+  description = "EKS Node Instance Type for Spots"
+  type        = list(string)
+  default     = ["t3.small", "t3.medium", "t2.small"]
 }
+
+variable "mng_node_group_name" {
+  description = "EKS OnDemand NodeGroup Name"
+  type        = string
+  default     = "od-ng"
+}
+
+variable "mng_node_instance_types" {
+  description = "EKS Node Instance Type for OnStances"
+  type        = string
+  default     = "t3.small"
+}
+
+
 
 
 

@@ -50,25 +50,25 @@ module "private_eks" {
 
   worker_groups = [
     {
-      name                      = var.node_group_name
-      instance_type             = var.node_instance_type
+      name                                     = var.spot_node_group_name
+      override_instance_types                  = var.spot_node_instance_types
+      iam_instance_profile_name                = var.nodegroup_role_name
+      asg_min_size                             = 2
+      asg_max_size                             = 5
+      on_demand_base_capacity                  = 0
+      on_demand_percentage_above_base_capacity = 0
+      spot_allocation_strategy                 = "capacity-optimized"
+      spot_max_price                           = 0.017
+      kubelet_extra_args                       = "--node-labels=lifecycle=Ec2Spot"
+    },
+    {
+      name                      = var.mng_node_group_name
+      instance_type             = var.mng_node_instance_types
       iam_instance_profile_name = var.nodegroup_role_name
-      asg_desired_capacity      = 1
-      asg_min_size              = 1
       asg_max_size              = 5
+      kubelet_extra_args        = "--node-labels=lifecycle=OnDemand"
     }
   ]
-
-  # node_groups = {
-  #   ng1 = {
-  #     desired_capacity = 1
-  #    max_capacity     = 10
-  #    min_capacity     = 1
-  #
-  #    instance_type = var.node_instance_type
-  #    iam_role_arn  = var.nodegroup_arn
-  #  }
-  #}
 }
 
 resource "aws_security_group_rule" "allow_https" {

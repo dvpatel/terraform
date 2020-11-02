@@ -61,7 +61,7 @@ module "private_eks" {
       iam_instance_profile_name                = var.nodegroup_role_name
       asg_desired_capacity                     = 2
       asg_min_size                             = 2
-      asg_max_size                             = 5
+      asg_max_size                             = 10
       on_demand_base_capacity                  = 0
       on_demand_percentage_above_base_capacity = 0
       spot_allocation_strategy                 = "capacity-optimized"

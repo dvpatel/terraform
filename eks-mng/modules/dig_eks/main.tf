@@ -66,7 +66,7 @@ module "private_eks" {
       spot_allocation_strategy                 = "capacity-optimized"
       spot_max_price                           = 0.017
       kubelet_extra_args                       = "--node-labels=lifecycle=Ec2Spot,intent=apps,aws.amazon.com/spot=true --register-with-taints=spotInstance=true:PreferNoSchedule"
-      tags = ["k8s.io/cluster-autoscaler/node-template/label/lifecycle=Ec2Spot", "k8s.io/cluster-autoscaler/node-template/label/intent=apps","k8s.io/cluster-autoscaler/node-template/label/aws.amazon.com/spot=true","k8s.io/cluster-autoscaler/node-template/taint/spotInstance=true:PreferNoSchedule"]
+      tags = [{key = "k8s.io/cluster-autoscaler/node-template/label/lifecycle", value="Ec2Spot"}, {key="k8s.io/cluster-autoscaler/node-template/label/intent", value="apps"},{key="k8s.io/cluster-autoscaler/node-template/label/aws.amazon.com/spot", value=true},{key="k8s.io/cluster-autoscaler/node-template/taint/spotInstance", value="true:PreferNoSchedule"}]
     }
   ]
 }

@@ -72,6 +72,18 @@ module "private_eks" {
   ]
 }
 
+module "alb_ingress_controller" {
+  source  = "iplabs/alb-ingress-controller/kubernetes"
+
+  k8s_cluster_type = "eks"
+  k8s_namespace    = "kube-system"
+
+  aws_region_name  = var.cluster_name
+  k8s_cluster_name = var.region
+
+  depends_on = [module.private_eks]
+}
+
 resource "aws_security_group_rule" "allow_https" {
   description       = "Allow bastion host in public subnet to access EKS API"
   type              = "ingress"

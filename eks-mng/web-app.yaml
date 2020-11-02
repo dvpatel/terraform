@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-to-scaleout
+  name: web-stateless
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: nginx
@@ -15,11 +15,41 @@ spec:
     spec:
       containers:
       - image: nginx
-        name: nginx-to-scaleout
+        name: web-stateless
         resources:
           limits:
-            cpu: 500m
-            memory: 512Mi
+            cpu: 1000m
+            memory: 1024Mi
           requests:
-            cpu: 500m
-            memory: 512Mi
+            cpu: 1000m
+            memory: 1024Mi
+      nodeSelector:    
+        lifecycle: Ec2Spot
+--- 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-stateful
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        service: redis
+        app: redis
+    spec:
+      containers:
+      - image: redis:3.2-alpine
+        name: web-stateful
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 1024Mi
+          requests:
+            cpu: 1000m
+            memory: 1024Mi
+      nodeSelector:
+        lifecycle: OnDemand

@@ -1,7 +1,3 @@
-locals {
-  "k8s_cluster_name" = var.cluster_name
-}
-
 data "aws_availability_zones" "available" {
 }
 
@@ -32,7 +28,7 @@ data "aws_subnet_ids" "private" {
 data "aws_region" "current" {}
 
 data "aws_eks_cluster" "target" {
-  name = local.k8s_cluster_name
+  name = var.cluster_name
 }
 
 data "aws_eks_cluster_auth" "aws_iam_authenticator" {

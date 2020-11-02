@@ -41,6 +41,9 @@ module "private_eks" {
   cluster_name    = var.cluster_name
   cluster_version = "1.18"
 
+  #  Turn on oidc for alb integration
+  enable_irsa = true
+
   #  This should be subnet_ids
   subnets = data.aws_subnet_ids.private.ids
 
@@ -88,7 +91,7 @@ module "private_eks" {
 
 module "alb_ingress_controller" {
   source  = "iplabs/alb-ingress-controller/kubernetes"
-  aws_alb_ingress_controller_version = 2.0.0
+  aws_alb_ingress_controller_version = "2.0.0"
 
   k8s_cluster_type = "eks"
   k8s_namespace    = "default"

@@ -25,24 +25,10 @@ data "aws_subnet_ids" "private" {
   }
 }
 
-data "aws_region" "current" {}
-
-data "aws_eks_cluster" "target" {
-  name = var.cluster_name
-}
-
-data "aws_eks_cluster_auth" "aws_iam_authenticator" {
-  name = data.aws_eks_cluster.target.name
-}
-
-
 module "private_eks" {
   source          = "terraform-aws-modules/eks/aws"
   cluster_name    = var.cluster_name
   cluster_version = "1.18"
-
-  #  Turn on oidc for alb integration
-  enable_irsa = true
 
   #  This should be subnet_ids
   subnets = data.aws_subnet_ids.private.ids
@@ -87,20 +73,6 @@ module "private_eks" {
       tags                                     = [{ key = "k8s.io/cluster-autoscaler/node-template/label/lifecycle", value = "Ec2Spot", propagate_at_launch = true }, { key = "k8s.io/cluster-autoscaler/node-template/label/intent", value = "apps", propagate_at_launch = true }, { key = "k8s.io/cluster-autoscaler/node-template/label/aws.amazon.com/spot", value = true, propagate_at_launch = true }, { key = "k8s.io/cluster-autoscaler/node-template/taint/spotInstance", value = "true:PreferNoSchedule", propagate_at_launch = true }]
     }
   ]
-}
-
-module "alb_ingress_controller" {
-  source  = "iplabs/alb-ingress-controller/kubernetes"
-  aws_alb_ingress_controller_version = "2.0.0"
-
-  k8s_cluster_type = "eks"
-  k8s_namespace    = "default"
-
-  aws_region_name  = data.aws_region.current.name
-  aws_vpc_id = data.aws_vpc.selected[0].id
-  k8s_cluster_name = data.aws_eks_cluster.target.name
-
-  depends_on = [module.private_eks]
 }
 
 resource "aws_security_group_rule" "allow_https" {

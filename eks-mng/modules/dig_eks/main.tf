@@ -91,11 +91,11 @@ module "alb_ingress_controller" {
   aws_alb_ingress_controller_version = 2.0.0
 
   k8s_cluster_type = "eks"
-  k8s_namespace    = "kube-system"
+  k8s_namespace    = "default"
 
   aws_region_name  = data.aws_region.current.name
+  aws_vpc_id = data.aws_vpc.selected[0].id
   k8s_cluster_name = data.aws_eks_cluster.target.name
-
 
   depends_on = [module.private_eks]
 }

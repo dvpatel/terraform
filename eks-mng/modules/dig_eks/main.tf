@@ -1,3 +1,7 @@
+locals {
+  "k8s_cluster_name" = var.cluster_name
+}
+
 data "aws_availability_zones" "available" {
 }
 
@@ -24,6 +28,17 @@ data "aws_subnet_ids" "private" {
     tier = "private"
   }
 }
+
+data "aws_region" "current" {}
+
+data "aws_eks_cluster" "target" {
+  name = local.k8s_cluster_name
+}
+
+data "aws_eks_cluster_auth" "aws_iam_authenticator" {
+  name = data.aws_eks_cluster.target.name
+}
+
 
 module "private_eks" {
   source          = "terraform-aws-modules/eks/aws"
@@ -78,8 +93,9 @@ module "alb_ingress_controller" {
   k8s_cluster_type = "eks"
   k8s_namespace    = "kube-system"
 
-  aws_region_name  = var.cluster_name
-  k8s_cluster_name = var.region
+  aws_region_name  = data.aws_region.current.name
+  k8s_cluster_name = data.aws_eks_cluster.target.name
+
 
   depends_on = [module.private_eks]
 }

@@ -59,7 +59,7 @@ module "private_eks" {
       name                                     = var.spot_node_group_name
       override_instance_types                  = var.spot_node_instance_types
       iam_instance_profile_name                = var.nodegroup_role_name
-      asg_desired_capacity                     = 0
+      asg_desired_capacity                     = 1
       asg_min_size                             = 0
       asg_max_size                             = 10
       on_demand_base_capacity                  = 0

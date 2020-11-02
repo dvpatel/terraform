@@ -67,6 +67,9 @@ module "private_eks" {
     {
       name                      = var.mng_node_group_name
       instance_type             = var.mng_node_instance_types
+      asg_desired_capacity                     = 1
+      asg_min_size                             = 1
+      asg_max_size                             = 3
       iam_instance_profile_name = var.nodegroup_role_name
       kubelet_extra_args        = "--node-labels=lifecycle=OnDemand,aws.amazon.com/spot=false"
     },

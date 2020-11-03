@@ -1,6 +1,13 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: dev
   name: web-stateless
 spec:
   replicas: 3
@@ -29,6 +36,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: dev
   name: web-stateful
 spec:
   replicas: 2
@@ -57,6 +65,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  namespace: dev
   name: nginx-service
 spec:
   ports:
@@ -70,6 +79,7 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
+  namespace: dev
   name: nginx-ingress
   annotations:
     kubernetes.io/ingress.class: alb

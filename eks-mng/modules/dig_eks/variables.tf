@@ -35,7 +35,7 @@ variable "spot_node_group_name" {
 variable "spot_node_instance_types" {
   description = "EKS Node Instance Type for Spots"
   type        = list(string)
-  default     = ["t3.small", "t3.medium", "t2.small"]
+  default     = ["m5.large", "m4.large", "m5d.large", "m5a.large", "m5ad.large", "m5n.large", "m5dn.large"]
 }
 
 variable "mng_node_group_name" {
@@ -47,7 +47,7 @@ variable "mng_node_group_name" {
 variable "mng_node_instance_types" {
   description = "EKS Node Instance Type for OnStances"
   type        = string
-  default     = "t3.small"
+  default     = "t3.medium"
 }
 
 

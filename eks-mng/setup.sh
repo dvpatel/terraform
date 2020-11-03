@@ -36,9 +36,9 @@ kubectl -n kube-system set image deployment.apps/cluster-autoscaler cluster-auto
 
 #  Sample app
 #  https://www.eksworkshop.com/beginner/080_scaling/test_ca/
-kubectl apply -f web-app.yaml
-kubectl get deployment/web-stateless
-kubectl get deployment/web-stateful
+# kubectl apply -f web-app.yaml
+# kubectl get deployment/web-stateless
+# kubectl get deployment/web-stateful
 
 #  kubectl get nodes --show-labels --selector=lifecycle=Ec2Spot
 

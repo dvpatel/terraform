@@ -86,7 +86,7 @@ metadata:
     alb.ingress.kubernetes.io/scheme: internal
 spec:
   rules:
-  - http: nginx.dvpexample.com
+  - http: 
       paths:
       - path: /
         backend:

@@ -93,6 +93,26 @@ module "private_eks" {
   ]
 }
 
+
+#  Update kubeconfig after private cluster creation
+resource "null_resource" "eks_update_kubeconfig" {
+  provisioner "local-exec" {
+    command = "aws eks --region ${var.region} update-kubeconfig --name ${var.cluster_name}"
+  }
+  depends_on = [module.private_eks]
+}
+
+resource "null_resource" "cert_manager" {
+  provisioner "local-exec" {
+    command = "kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.0.2/cert-manager.yaml"
+  }
+
+  depends_on = [null_resource.eks_update_kubeconfig]
+}
+
+
+
+
 # module "alb_ingress_controller" {
 #   source  = "iplabs/alb-ingress-controller/kubernetes"
 #   aws_alb_ingress_controller_version = "2.0.0"

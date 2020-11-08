@@ -7,11 +7,13 @@ terraform init
 
 terraform apply -auto-approve
 
-aws eks --region us-east-1 update-kubeconfig --name dev-eks
+#  Moved to terraform module
+#  aws eks --region us-east-1 update-kubeconfig --name dev-eks
 
 
+#  Moved to terraform module
 #  Install cert mgr
-kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.0.2/cert-manager.yaml
+#  kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.0.2/cert-manager.yaml
 
 
 #  https://github.com/aws/eks-charts/tree/master/stable/aws-load-balancer-controller

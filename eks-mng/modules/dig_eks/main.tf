@@ -94,7 +94,7 @@ module "private_eks" {
 }
 
 
-#  Update kubeconfig after private cluster creation
+#  Update kubeconfig; setup certmgr, cluster autoscaler, etc.
 resource "null_resource" "eks_post_setup" {
   provisioner "local-exec" {
     command = "$HOME/terraform/eks-mng/post_setup.sh"

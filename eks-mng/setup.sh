@@ -18,3 +18,10 @@ terraform apply -auto-approve
 
 #  kubectl scale --replicas=10 deployment/web-stateless -n dev
 #  kubectl get pods -n dev
+
+
+#  HPA Test
+#  kubectl get deployment metrics-server -n kube-system
+#  kubectl autoscale deployment web-stateless --cpu-percent=50 --min=1 --max=15 -n dev
+#  kubectl describe hpa -n dev
+#  while true; do wget -q -O- http://internal-k8s-dev-nginxing-8dead848ea-1277375131.us-east-1.elb.amazonaws.com; done

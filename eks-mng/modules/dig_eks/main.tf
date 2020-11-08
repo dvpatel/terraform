@@ -97,7 +97,7 @@ module "private_eks" {
 #  Update kubeconfig; setup certmgr, cluster autoscaler, etc.
 resource "null_resource" "eks_post_setup" {
   provisioner "local-exec" {
-    command = "$HOME/terraform/eks-mng/post_setup.sh"
+    command = "$HOME/terraform/eks-mng/post_setup.sh ${var.region} ${var.cluster_name}"
   }
   depends_on = [module.private_eks]
 }

@@ -22,7 +22,7 @@ kubectl --namespace=kube-system get daemonsets
 
 
 #  Cluster Autoscaler
-kubectl apply -f cluster-autoscaler-autodiscover.yaml
+kubectl apply -f $HOME/terraform/eks-mng/cluster-autoscaler-autodiscover.yaml
 kubectl -n kube-system annotate deployment.apps/cluster-autoscaler cluster-autoscaler.kubernetes.io/safe-to-evict="false"
 
 # we need to retrieve the latest docker image available for our EKS version

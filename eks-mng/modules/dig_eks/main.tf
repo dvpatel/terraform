@@ -95,36 +95,11 @@ module "private_eks" {
 
 
 #  Update kubeconfig after private cluster creation
-resource "null_resource" "eks_update_kubeconfig" {
+resource "null_resource" "eks_post_setup" {
   provisioner "local-exec" {
-    command = "aws eks --region ${var.region} update-kubeconfig --name ${var.cluster_name}"
+    command = "$HOME/terraform/eks-mng/post_setup.sh"
   }
   depends_on = [module.private_eks]
-}
-
-resource "null_resource" "cert_manager" {
-  provisioner "local-exec" {
-    command = "kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.0.2/cert-manager.yaml"
-  }
-
-  depends_on = [null_resource.eks_update_kubeconfig]
-}
-
-resource "null_resource" "alb_controller" {
-  provisioner "local-exec" {
-    command = "helm repo add eks https://aws.github.io/eks-charts; kubectl apply -k 'github.com/aws/eks-charts/stable/aws-load-balancer-controller//crds?ref=master';helm upgrade -i aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=dev-eks"
-  }
-
-  depends_on = [null_resource.cert_manager]
-}
-
-
-resource "null_resource" "termination_handler" {
-  provisioner "local-exec" {
-    command = "helm upgrade --install aws-node-termination-handler --namespace kube-system --set nodeSelector.lifecycle=Ec2Spot eks/aws-node-termination-handler"
-  }
-
-  depends_on = [null_resource.alb_controller]
 }
 
 

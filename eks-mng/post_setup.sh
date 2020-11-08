@@ -41,3 +41,7 @@ kubectl -n kube-system logs -f deployment/cluster-autoscaler
 
 #  https://github.com/aws/eks-charts/tree/master/stable/aws-vpc-cni
 helm install --name aws-vpc-cni --namespace kube-system eks/aws-vpc-cni --values eni-values.yaml
+
+
+#  Setup metrics server for HPA
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.4.0/components.yaml

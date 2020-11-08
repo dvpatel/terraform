@@ -10,6 +10,12 @@ terraform apply -auto-approve
 aws eks --region us-east-1 update-kubeconfig --name dev-eks
 
 
+#  Install cert mgr
+kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.0.2/cert-manager.yaml
+
+#  Install yaml spec for alb
+kubectl apply -f install_v2_0_0.yaml
+
 #  https://github.com/aws/eks-charts/tree/master/stable/aws-load-balancer-controller
 #  alb-node-iam-policy.json
 #  Set ALB Ingress, pre-req IAM Policy alb-node-iam-policy.json must be attached to eks worker nodes (devNodeInstanceRole), AWSLoadBalancerControllerIAMPolicy
@@ -18,14 +24,6 @@ kubectl apply -k "github.com/aws/eks-charts/stable/aws-load-balancer-controller/
 helm upgrade -i aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=dev-eks
 #  kubectl logs -n kube-system $(kubectl get po -n kube-system | egrep -o aws-load-balancer-controller[a-zA-Z0-9-]+)
 #  kubectl -n kube-system rollout status deployment aws-load-balancer-controller
-
-
-#  Install cert mgr
-kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.0.2/cert-manager.yaml
-
-
-#  Install yaml spec for alb
-kubectl apply -f install_v2_0_0.yaml
 
 
 #  Setup Node Termination handler as daemonset

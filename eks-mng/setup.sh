@@ -24,10 +24,6 @@ helm upgrade -i aws-load-balancer-controller eks/aws-load-balancer-controller -n
 #  kubectl -n kube-system rollout status deployment aws-load-balancer-controller
 
 
-#  Install yaml spec for alb
-kubectl apply -f install_v2_0_0.yaml
-
-
 #  Setup Node Termination handler as daemonset
 helm upgrade --install aws-node-termination-handler --namespace kube-system --set nodeSelector.lifecycle=Ec2Spot eks/aws-node-termination-handler
 #  kubectl --namespace=kube-system get daemonsets 

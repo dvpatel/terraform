@@ -90,7 +90,7 @@ spec:
   rules:
   - http:
       paths:
-      - path: /*
+      - path: /
         backend:
           serviceName: nginx-service
           servicePort: 80

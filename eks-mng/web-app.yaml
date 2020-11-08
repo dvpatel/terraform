@@ -10,7 +10,7 @@ metadata:
   namespace: dev
   name: web-stateless
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: nginx

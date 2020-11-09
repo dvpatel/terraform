@@ -1,8 +1,8 @@
 #!/bin/bash
 
 terraform init
-
 terraform apply -auto-approve
+
 
 #  Sample app
 #  https://www.eksworkshop.com/beginner/080_scaling/test_ca/

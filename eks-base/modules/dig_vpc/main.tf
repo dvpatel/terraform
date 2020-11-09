@@ -19,12 +19,12 @@ module "vpc_for_eks" {
   enable_dns_hostnames = true
 
   vpc_tags = {
-    Name = var.vpc_name
+    Name        = var.vpc_name
     Environment = "dev"
   }
 
   public_subnet_tags = {
-    "tier"                                      = "public"
+    "tier" = "public"
     # "kubernetes.io/cluster/${var.cluster_name}" = "shared"
     # "kubernetes.io/role/elb"                    = "1"
   }

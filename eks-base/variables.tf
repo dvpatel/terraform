@@ -1,11 +1,11 @@
 variable "profile" {
   description = "aws profile for bastion creation"
-  default = "default"
+  default     = "default"
 }
 
 variable "region" {
   description = "bastion region"
-  default = "us-east-1"
+  default     = "us-east-1"
 }
 
 variable "vpc_name" {

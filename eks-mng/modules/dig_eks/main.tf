@@ -54,13 +54,11 @@ module "private_eks" {
       asg_max_size              = 3
       iam_instance_profile_name = var.nodegroup_role_name
       kubelet_extra_args        = "--node-labels=lifecycle=OnDemand"
-      key_name                  = "WebserverSGKeyPair"
     },
     {
       name                                     = var.spot_node_group_name
       override_instance_types                  = var.spot_node_instance_types
       iam_instance_profile_name                = var.nodegroup_role_name
-      key_name                                 = "WebserverSGKeyPair"
       asg_desired_capacity                     = 2
       asg_min_size                             = 2
       asg_max_size                             = 10

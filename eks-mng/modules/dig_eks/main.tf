@@ -49,16 +49,18 @@ module "private_eks" {
     {
       name                      = var.mng_node_group_name
       instance_type             = var.mng_node_instance_types
-      asg_desired_capacity                     = 1
-      asg_min_size                             = 1
-      asg_max_size                             = 3
+      asg_desired_capacity      = 1
+      asg_min_size              = 1
+      asg_max_size              = 3
       iam_instance_profile_name = var.nodegroup_role_name
       kubelet_extra_args        = "--node-labels=lifecycle=OnDemand"
+      key_name                  = "WebserverSGKeyPair"
     },
     {
       name                                     = var.spot_node_group_name
       override_instance_types                  = var.spot_node_instance_types
       iam_instance_profile_name                = var.nodegroup_role_name
+      key_name                                 = "WebserverSGKeyPair"
       asg_desired_capacity                     = 2
       asg_min_size                             = 2
       asg_max_size                             = 10
@@ -67,16 +69,16 @@ module "private_eks" {
       spot_allocation_strategy                 = "capacity-optimized"
       spot_max_price                           = 0.017
       kubelet_extra_args                       = "--node-labels=lifecycle=Ec2Spot,intent=apps,aws.amazon.com/spot=true"
-      tags                                     = [
-        { 
-          key = "k8s.io/cluster-autoscaler/node-template/label/lifecycle", 
-          value = "Ec2Spot", 
-          propagate_at_launch = true 
-        }, 
-        { 
-          key = "k8s.io/cluster-autoscaler/node-template/label/intent", 
-          value = "apps", 
-          propagate_at_launch = true 
+      tags = [
+        {
+          key                 = "k8s.io/cluster-autoscaler/node-template/label/lifecycle",
+          value               = "Ec2Spot",
+          propagate_at_launch = true
+        },
+        {
+          key                 = "k8s.io/cluster-autoscaler/node-template/label/intent",
+          value               = "apps",
+          propagate_at_launch = true
         },
         {
           "key"                 = "k8s.io/cluster-autoscaler/enabled"

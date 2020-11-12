@@ -63,3 +63,13 @@ kubectl apply -f https://raw.githubusercontent.com/aws/amazon-vpc-cni-k8s/v1.7.5
 #  Setup custom CNI Networking
 #  https://docs.aws.amazon.com/eks/latest/userguide/cni-custom-network.html
 
+
+#  istio setup during bastion install
+#  Install istio
+istioctl manifest apply --set profile=demo
+kubectl -n istio-system get svc
+kubectl -n istio-system get pods
+
+
+
+

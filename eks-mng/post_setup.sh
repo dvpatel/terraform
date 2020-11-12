@@ -66,7 +66,7 @@ kubectl apply -f https://raw.githubusercontent.com/aws/amazon-vpc-cni-k8s/v1.7.5
 
 #  istio setup during bastion install
 #  Install istio
-istioctl manifest apply --set profile=demo
+istioctl install --set profile=demo
 kubectl -n istio-system get svc
 kubectl -n istio-system get pods
 

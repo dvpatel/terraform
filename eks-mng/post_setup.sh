@@ -47,3 +47,19 @@ kubectl -n kube-system logs -f deployment/cluster-autoscaler
 
 #  Setup metrics server for HPA
 kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.4.0/components.yaml
+
+
+#  Install Calico
+kubectl apply -f https://raw.githubusercontent.com/aws/amazon-vpc-cni-k8s/v1.7.5/config/v1.7/calico.yaml
+
+
+
+#  Incomplete
+#  https://docs.aws.amazon.com/eks/latest/userguide/security-groups-for-pods.html
+#  Make sure AmazonEKSVPCResourceController is added to eks cluster role
+#  kubectl set env daemonset aws-node -n kube-system ENABLE_POD_ENI=true
+
+#  Todo
+#  Setup custom CNI Networking
+#  https://docs.aws.amazon.com/eks/latest/userguide/cni-custom-network.html
+

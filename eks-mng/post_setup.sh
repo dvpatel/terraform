@@ -73,3 +73,7 @@ kubectl -n istio-system get pods
 #  Add a namespace label to instruct Istio to automatically inject Envoy sidecar 
 #  proxies when you deploy your application later:
 kubectl label namespace default istio-injection=enabled
+
+#  Auto add envoy sidecar to dev namespace
+kubectl create namespace dev
+kubectl label namespace dev istio-injection=enabled

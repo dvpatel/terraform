@@ -70,6 +70,6 @@ istioctl manifest apply --set profile=demo
 kubectl -n istio-system get svc
 kubectl -n istio-system get pods
 
-
-
-
+#  Add a namespace label to instruct Istio to automatically inject Envoy sidecar 
+#  proxies when you deploy your application later:
+kubectl label namespace default istio-injection=enabled

@@ -48,6 +48,7 @@ module "private_eks" {
   worker_groups = [
     {
       name                      = var.mng_node_group_name
+      ami_id                    = "ami-00e1ed6a3ebe06fd0"
       instance_type             = var.mng_node_instance_types
       asg_desired_capacity      = 1
       asg_min_size              = 1
@@ -57,6 +58,7 @@ module "private_eks" {
     },
     {
       name                                     = var.spot_node_group_name
+      ami_id                                   = "ami-00e1ed6a3ebe06fd0"
       override_instance_types                  = var.spot_node_instance_types
       iam_instance_profile_name                = var.nodegroup_role_name
       asg_desired_capacity                     = 2

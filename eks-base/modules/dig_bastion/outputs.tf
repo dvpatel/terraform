@@ -1,11 +1,11 @@
 # Output variable definitions
 
-output "public_ip" {
+output "bastion_ip" {
   description = "Bastion IP"
   value       = module.bastion_instance.public_ip
 }
 
-output "instance_public_dns" {
+output "bastion_dns" {
   description = "Public DNS name assigned to the EC2 instance"
-  value       = module.bastion_instance.public_dns[0]
+  value       = module.bastion_instance.public_dns
 }

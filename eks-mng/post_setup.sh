@@ -50,7 +50,7 @@ kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/down
 
 
 #  Install Calico
-kubectl apply -f https://raw.githubusercontent.com/aws/amazon-vpc-cni-k8s/v1.7.5/config/v1.7/calico.yaml
+#  kubectl apply -f https://raw.githubusercontent.com/aws/amazon-vpc-cni-k8s/v1.7.5/config/v1.7/calico.yaml
 
 
 

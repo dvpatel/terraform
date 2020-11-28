@@ -18,6 +18,7 @@ terraform apply -auto-approve
 
 #  kubectl scale --replicas=10 deployment/web-stateless -n dev
 #  kubectl get pods -n dev
+#  kubectl get nodes
 
 
 #  HPA Test

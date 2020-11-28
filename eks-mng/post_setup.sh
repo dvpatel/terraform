@@ -66,7 +66,7 @@ kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/down
 
 #  istio setup during bastion install
 #  Install istio
-istioctl install --set profile=default
+istioctl install --set profile=default --skip-confirmation
 kubectl -n istio-system get svc
 kubectl -n istio-system get pods
 

@@ -56,8 +56,44 @@ module "private_eks" {
       kubelet_extra_args        = "--node-labels=lifecycle=OnDemand"
     },
     {
-      name                                     = var.spot_node_group_name
-      override_instance_types                  = var.spot_node_instance_types
+      name                                     = var.spot_node_group_name_grp1
+      override_instance_types                  = var.spot_node_instance_types_grp1
+      iam_instance_profile_name                = var.nodegroup_role_name
+      ami_id 				       = "ami-0acfc3fffaaa4e015"
+      asg_desired_capacity                     = 2
+      asg_min_size                             = 2
+      asg_max_size                             = 10
+      on_demand_base_capacity                  = 0
+      on_demand_percentage_above_base_capacity = 0
+      spot_allocation_strategy                 = "capacity-optimized"
+      spot_max_price                           = 0.017
+      kubelet_extra_args                       = "--node-labels=lifecycle=Ec2Spot,intent=apps,aws.amazon.com/spot=true"
+      tags = [
+        {
+          key                 = "k8s.io/cluster-autoscaler/node-template/label/lifecycle",
+          value               = "Ec2Spot",
+          propagate_at_launch = true
+        },
+        {
+          key                 = "k8s.io/cluster-autoscaler/node-template/label/intent",
+          value               = "apps",
+          propagate_at_launch = true
+        },
+        {
+          "key"                 = "k8s.io/cluster-autoscaler/enabled"
+          "propagate_at_launch" = "false"
+          "value"               = "true"
+        },
+        {
+          "key"                 = "k8s.io/cluster-autoscaler/${var.cluster_name}"
+          "propagate_at_launch" = "false"
+          "value"               = "true"
+        }
+      ]
+    },
+    {
+      name                                     = var.spot_node_group_name_grp2
+      override_instance_types                  = var.spot_node_instance_types_grp2
       iam_instance_profile_name                = var.nodegroup_role_name
       ami_id 				       = "ami-0acfc3fffaaa4e015"
       asg_desired_capacity                     = 2

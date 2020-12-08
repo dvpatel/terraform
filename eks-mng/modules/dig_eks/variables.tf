@@ -26,16 +26,28 @@ variable "nodegroup_role_name" {
   default     = "devNodeInstanceRole"
 }
 
-variable "spot_node_group_name" {
-  description = "EKS Spot NodeGroup Name"
+variable "spot_node_group_name_grp1" {
+  description = "EKS Spot NodeGroup Name Group1"
   type        = string
-  default     = "spot-ng"
+  default     = "spot-ng-1x"
 }
 
-variable "spot_node_instance_types" {
-  description = "EKS Node Instance Type for Spots"
+variable "spot_node_group_name_grp2" {
+  description = "EKS Spot NodeGroup Name Group2"
+  type        = string
+  default     = "spot-ng-2x"
+}
+
+variable "spot_node_instance_types_grp1" {
+  description = "EKS Node Instance Type for Spots Group 1"
   type        = list(string)
-  default     = ["m5.large", "m4.large", "m5d.large", "m5a.large", "m5ad.large", "m5n.large", "m5dn.large"]
+  default     = ["m5.xlarge", "m5n.xlarge", "m5d.xlarge", "m5dn.xlarge","m5a.xlarge", "m4.xlarge"] 
+}
+
+variable "spot_node_instance_types_grp2" {
+  description = "EKS Node Instance Type for Spots Group 2"
+  type        = list(string)
+  default     = ["m5.2xlarge", "m5n.2xlarge", "m5d.2xlarge", "m5dn.2xlarge","m5a.2xlarge", "m4.2xlarge"]
 }
 
 variable "mng_node_group_name" {

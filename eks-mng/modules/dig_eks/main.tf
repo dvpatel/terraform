@@ -59,7 +59,6 @@ module "private_eks" {
       name                                     = var.spot_node_group_name_grp1
       override_instance_types                  = var.spot_node_instance_types_grp1
       iam_instance_profile_name                = var.nodegroup_role_name
-      ami_id 				       = "ami-0acfc3fffaaa4e015"
       asg_desired_capacity                     = 2
       asg_min_size                             = 2
       asg_max_size                             = 10
@@ -95,7 +94,6 @@ module "private_eks" {
       name                                     = var.spot_node_group_name_grp2
       override_instance_types                  = var.spot_node_instance_types_grp2
       iam_instance_profile_name                = var.nodegroup_role_name
-      ami_id 				       = "ami-0acfc3fffaaa4e015"
       asg_desired_capacity                     = 2
       asg_min_size                             = 2
       asg_max_size                             = 10

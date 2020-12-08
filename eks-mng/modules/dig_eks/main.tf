@@ -49,9 +49,9 @@ module "private_eks" {
     {
       name                      = var.mng_node_group_name
       instance_type             = var.mng_node_instance_types
-      asg_desired_capacity      = 1
-      asg_min_size              = 1
-      asg_max_size              = 3
+      asg_desired_capacity      = 2
+      asg_min_size              = 2
+      asg_max_size              = 10
       iam_instance_profile_name = var.nodegroup_role_name
       kubelet_extra_args        = "--node-labels=lifecycle=OnDemand"
     },
@@ -59,6 +59,7 @@ module "private_eks" {
       name                                     = var.spot_node_group_name
       override_instance_types                  = var.spot_node_instance_types
       iam_instance_profile_name                = var.nodegroup_role_name
+      ami_id 				       = "ami-0acfc3fffaaa4e015"
       asg_desired_capacity                     = 2
       asg_min_size                             = 2
       asg_max_size                             = 10

@@ -54,6 +54,7 @@ module "private_eks" {
       asg_max_size              = 10
       iam_instance_profile_name = var.nodegroup_role_name
       kubelet_extra_args        = "--node-labels=lifecycle=OnDemand"
+      bootstrap_extra_args      = "--use-max-pods false"
     },
     {
       name                                     = var.spot_node_group_name_grp1
@@ -67,6 +68,7 @@ module "private_eks" {
       spot_allocation_strategy                 = "capacity-optimized"
       spot_max_price                           = 0.017
       kubelet_extra_args                       = "--node-labels=lifecycle=Ec2Spot,intent=apps,aws.amazon.com/spot=true"
+      bootstrap_extra_args                     = "--use-max-pods false"
       tags = [
         {
           key                 = "k8s.io/cluster-autoscaler/node-template/label/lifecycle",
@@ -102,6 +104,7 @@ module "private_eks" {
       spot_allocation_strategy                 = "capacity-optimized"
       spot_max_price                           = 0.017
       kubelet_extra_args                       = "--node-labels=lifecycle=Ec2Spot,intent=apps,aws.amazon.com/spot=true"
+      bootstrap_extra_args                     = "--use-max-pods false"
       tags = [
         {
           key                 = "k8s.io/cluster-autoscaler/node-template/label/lifecycle",

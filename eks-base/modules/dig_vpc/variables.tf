@@ -43,7 +43,7 @@ variable "vpc_enable_nat_gateway" {
 variable "vpc_enable_single_nat_gateway" {
   description = "Enable single NAT gateway for VPC"
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "cluster_name" {

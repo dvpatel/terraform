@@ -2,6 +2,15 @@ terraform {
   required_version = ">= 0.12.6"
 }
 
+terraform {
+  required_providers {
+    kubernetes = {
+      source = "hashicorp/kubernetes"
+      version = "2.0.2"
+    }
+  }
+}
+
 provider "aws" {
   region  = var.region
   profile = var.profile

@@ -1,4 +1,5 @@
 .terraform
+.terraform.lock.hcl
 user-data.sh
 secrets_variables.tf
 *.xxx

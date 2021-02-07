@@ -45,6 +45,11 @@ module "private_eks" {
   #  let me manage IAM resources for workers
   manage_worker_iam_resources = false
 
+  #  Added as workaround since default gp3 is not supported
+  workers_group_defaults = {
+  	root_volume_type = "gp2"
+  }
+
   worker_groups = [
     {
       name                      = var.mng_node_group_name

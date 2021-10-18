@@ -165,5 +165,5 @@ resource "null_resource" "eks_post_setup" {
   provisioner "local-exec" {
     command = "$HOME/terraform/eks-mng/post_setup.sh ${var.region} ${var.cluster_name}"
   }
-  depends_on = [module.aws_security_group_rule.allow_https]
+  depends_on = [aws_security_group_rule.allow_https]
 }

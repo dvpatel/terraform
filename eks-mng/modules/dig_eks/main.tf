@@ -147,23 +147,25 @@ module "private_eks" {
 #   depends_on = [module.private_eks]
 # }
 
+#  Run externally after cluster creation; 
 #  Upgrade SG ingress rule for cluster api access
-resource "aws_security_group_rule" "allow_https" {
-  description       = "Allow bastion host in public subnet to access EKS API"
-  type              = "ingress"
-  from_port         = 443
-  to_port           = 443
-  protocol          = "tcp"
-  cidr_blocks       = data.aws_vpc.selected.*.cidr_block
-  security_group_id = module.private_eks.cluster_security_group_id
-
-  depends_on = [module.private_eks]
-}
+#resource "aws_security_group_rule" "allow_https" {
+#  description       = "Allow bastion host in public subnet to access EKS API"
+#  type              = "ingress"
+#  from_port         = 443
+#  to_port           = 443
+#  protocol          = "tcp"
+#  cidr_blocks       = data.aws_vpc.selected.*.cidr_block
+#  security_group_id = module.private_eks.cluster_security_group_id
+#
+#  depends_on = [module.private_eks]
+#}
 
 #  Update kubeconfig; setup certmgr, cluster autoscaler, etc.
-resource "null_resource" "eks_post_setup" {
-  provisioner "local-exec" {
-    command = "$HOME/terraform/eks-mng/post_setup.sh ${var.region} ${var.cluster_name}"
-  }
-  depends_on = [aws_security_group_rule.allow_https]
-}
+#  Requires additional testing.
+#resource "null_resource" "eks_post_setup" {
+#  provisioner "local-exec" {
+#    command = "$HOME/terraform/eks-mng/post_setup.sh ${var.region} ${var.cluster_name}"
+#  }
+#  depends_on = [aws_security_group_rule.allow_https]
+#}

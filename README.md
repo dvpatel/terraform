@@ -20,6 +20,8 @@ To start from eks-base:
 3.  Override other inputs:  vpc_name, vpc_cidr, etc.;  See modules/*/variables.tf
 4.  create / edit user-data.sh
 5.  terraform init / plan / apply
+    -  terraform apply -auto-approve
+7.  When done, to destroy:  terraform destroy -auto-approve
 
 
 To start from eks-mng:

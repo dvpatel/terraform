@@ -30,7 +30,6 @@ variable "vpc_private_subnets" {
 variable "vpc_public_subnets" {
   description = "VPC public subnets"
   default     = ["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"]
-  #  default = ["10.0.4.0/24"]
   type    = list
 }
 

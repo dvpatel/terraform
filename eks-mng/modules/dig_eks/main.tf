@@ -147,7 +147,8 @@ module "private_eks" {
 #   depends_on = [module.private_eks]
 # }
 
-#  Run externally after cluster creation; 
+#  NOTE:  need to update bastion host SG to cluster SG outside of EKS creation process;
+#  TODO:  lookup cidr_block based on bastion host VPC subnet
 #  Upgrade SG ingress rule for cluster api access
 #resource "aws_security_group_rule" "allow_https" {
 #  description       = "Allow bastion host in public subnet to access EKS API"
@@ -155,12 +156,13 @@ module "private_eks" {
 #  from_port         = 443
 #  to_port           = 443
 #  protocol          = "tcp"
-#  cidr_blocks       = data.aws_vpc.selected.*.cidr_block
+#  cidr_blocks       = ["10.0.0.0/16"]
 #  security_group_id = module.private_eks.cluster_security_group_id
 #
 #  depends_on = [module.private_eks]
 #}
 
+#  NOTE:  Run outside of eks cluster creation
 #  Update kubeconfig; setup certmgr, cluster autoscaler, etc.
 #  Requires additional testing.
 #resource "null_resource" "eks_post_setup" {

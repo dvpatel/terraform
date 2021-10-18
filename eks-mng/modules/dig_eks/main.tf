@@ -139,7 +139,7 @@ resource "null_resource" "eks_post_setup" {
   provisioner "local-exec" {
     command = "$HOME/terraform/eks-mng/post_setup.sh ${var.region} ${var.cluster_name}"
   }
-  depends_on = [module.private_eks]
+  depends_on = [module.aws_security_group_rule.allow_https]
 }
 
 
@@ -165,4 +165,6 @@ resource "aws_security_group_rule" "allow_https" {
   protocol          = "tcp"
   cidr_blocks       = data.aws_vpc.selected.*.cidr_block
   security_group_id = module.private_eks.cluster_security_group_id
+
+  depends_on = [module.private_eks]
 }

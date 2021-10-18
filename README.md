@@ -36,3 +36,7 @@ To start from eks-mng:
 9.  terraform init / plan / apply
 10. Cluster built;  
 11. kubeconfig...
+12.
+
+
+

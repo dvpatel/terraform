@@ -133,16 +133,6 @@ module "private_eks" {
   ]
 }
 
-
-#  Update kubeconfig; setup certmgr, cluster autoscaler, etc.
-resource "null_resource" "eks_post_setup" {
-  provisioner "local-exec" {
-    command = "$HOME/terraform/eks-mng/post_setup.sh ${var.region} ${var.cluster_name}"
-  }
-  depends_on = [module.aws_security_group_rule]
-}
-
-
 # module "alb_ingress_controller" {
 #   source  = "iplabs/alb-ingress-controller/kubernetes"
 #   aws_alb_ingress_controller_version = "2.0.0"
@@ -157,6 +147,7 @@ resource "null_resource" "eks_post_setup" {
 #   depends_on = [module.private_eks]
 # }
 
+#  Upgrade SG ingress rule for cluster api access
 resource "aws_security_group_rule" "allow_https" {
   description       = "Allow bastion host in public subnet to access EKS API"
   type              = "ingress"
@@ -167,4 +158,12 @@ resource "aws_security_group_rule" "allow_https" {
   security_group_id = module.private_eks.cluster_security_group_id
 
   depends_on = [module.private_eks]
+}
+
+#  Update kubeconfig; setup certmgr, cluster autoscaler, etc.
+resource "null_resource" "eks_post_setup" {
+  provisioner "local-exec" {
+    command = "$HOME/terraform/eks-mng/post_setup.sh ${var.region} ${var.cluster_name}"
+  }
+  depends_on = [module.aws_security_group_rule.allow_https]
 }

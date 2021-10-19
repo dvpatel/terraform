@@ -42,7 +42,7 @@ module "private_eks" {
   cluster_endpoint_private_access = true
   cluster_endpoint_public_access  = false
 
-  #  Added for bastion host access from public subnet
+  #  Added for bastion host access from public subnet, 
   cluster_create_endpoint_private_access_sg_rule = true
   cluster_endpoint_private_access_cidrs = data.aws_vpc.selected.*.cidr_block
 
@@ -58,8 +58,8 @@ module "private_eks" {
     {
       name                      = var.mng_node_group_name
       instance_type             = var.mng_node_instance_types
-      asg_desired_capacity      = 2
-      asg_min_size              = 2
+      asg_desired_capacity      = 1
+      asg_min_size              = 1
       asg_max_size              = 10
       iam_instance_profile_name = var.nodegroup_role_name
       kubelet_extra_args        = "--node-labels=lifecycle=OnDemand"
@@ -68,8 +68,8 @@ module "private_eks" {
       name                                     = var.spot_node_group_name_grp1
       override_instance_types                  = var.spot_node_instance_types_grp1
       iam_instance_profile_name                = var.nodegroup_role_name
-      asg_desired_capacity                     = 2
-      asg_min_size                             = 2
+      asg_desired_capacity                     = 1
+      asg_min_size                             = 1
       asg_max_size                             = 10
       on_demand_base_capacity                  = 0
       on_demand_percentage_above_base_capacity = 0
@@ -103,8 +103,8 @@ module "private_eks" {
       name                                     = var.spot_node_group_name_grp2
       override_instance_types                  = var.spot_node_instance_types_grp2
       iam_instance_profile_name                = var.nodegroup_role_name
-      asg_desired_capacity                     = 2
-      asg_min_size                             = 2
+      asg_desired_capacity                     = 1
+      asg_min_size                             = 1
       asg_max_size                             = 10
       on_demand_base_capacity                  = 0
       on_demand_percentage_above_base_capacity = 0

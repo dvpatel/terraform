@@ -8,10 +8,8 @@ aws eks --region $REGION update-kubeconfig --name $CLUSTER_NAME
 #  Install cert mgr
 kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.0.2/cert-manager.yaml
 
-
-#  Add eks repository to helm
+#  Add public repositories to helm
 helm repo add eks https://aws.github.io/eks-charts
-
 
 #  https://github.com/aws/eks-charts/tree/master/stable/aws-load-balancer-controller
 #  alb-node-iam-policy.json
@@ -40,19 +38,14 @@ export AUTOSCALER_VERSION=$(curl -s "https://api.github.com/repos/kubernetes/aut
 kubectl -n kube-system set image deployment.apps/cluster-autoscaler cluster-autoscaler=us.gcr.io/k8s-artifacts-prod/autoscaling/cluster-autoscaler:v${AUTOSCALER_VERSION}
 kubectl -n kube-system logs -f deployment/cluster-autoscaler
 
-
 #  https://github.com/aws/eks-charts/tree/master/stable/aws-vpc-cni
 #  helm install aws-vpc-cni --namespace kube-system eks/aws-vpc-cni --values eni-values.yaml
-
 
 #  Setup metrics server for HPA
 kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.4.0/components.yaml
 
-
 #  Install Calico
 #  kubectl apply -f https://raw.githubusercontent.com/aws/amazon-vpc-cni-k8s/v1.7.5/config/v1.7/calico.yaml
-
-
 
 #  Incomplete
 #  https://docs.aws.amazon.com/eks/latest/userguide/security-groups-for-pods.html
@@ -62,7 +55,6 @@ kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/down
 #  Todo
 #  Setup custom CNI Networking
 #  https://docs.aws.amazon.com/eks/latest/userguide/cni-custom-network.html
-
 
 #  istio setup during bastion install
 #  Install istio

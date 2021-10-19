@@ -3,12 +3,26 @@
 terraform init
 terraform apply -auto-approve
 
-
 #  Sample app
 #  https://www.eksworkshop.com/beginner/080_scaling/test_ca/
 # kubectl apply -f web-app.yaml 
 # kubectl get deployment/web-stateless -n dev
 # kubectl get deployment/web-stateful -n dev
+
+# Sample App 2:  install nginx using helm
+#  helm repo add bitnami https://charts.bitnami.com/bitnami
+#  helm install mywebserver bitnami/nginx --set nodeSelector.lifecycle=Ec2Spot
+#  kubectl get svc,po,deploy
+#  kubectl describe deployment mywebserver
+#  kubectl get pods -l app.kubernetes.io/name=nginx
+#  kubectl get service mywebserver-nginx -o wide
+#  kubectl scale --replicas=10 deployment/mywebserver-nginx
+#  helm list
+#  To uninstall, cleanup
+#  helm uninstall mywebserver
+#  kubectl get pods -l app.kubernetes.io/name=nginx
+#  kubectl get service mywebserver-nginx -o wide
+
 
 #  kubectl get nodes --show-labels --selector=lifecycle=Ec2Spot
 
@@ -19,7 +33,6 @@ terraform apply -auto-approve
 #  kubectl scale --replicas=10 deployment/web-stateless -n dev
 #  kubectl get pods -n dev
 #  kubectl get nodes
-
 
 #  HPA Test
 #  kubectl get deployment metrics-server -n kube-system

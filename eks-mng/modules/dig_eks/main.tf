@@ -42,6 +42,10 @@ module "private_eks" {
   cluster_endpoint_private_access = true
   cluster_endpoint_public_access  = false
 
+  #  Added for bastion host access from public subnet
+  cluster_create_endpoint_private_access_sg_rule = true
+  cluster_endpoint_private_access_cidrs = data.aws_vpc.selected.*.cidr_block
+
   #  let me manage IAM resources for workers
   manage_worker_iam_resources = false
 
